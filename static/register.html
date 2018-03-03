@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Superhero Language Learner</title>
+    </head>
+    <body>
+        <h1>Register</h1>
+        <form>
+            <input type="text" id="email" name="email" placeholder="Email"/> <br />
+            <input type="password" id="password" name="password" placeholder="Password"/> <br />
+            <input type="submit" id="register-button" value="Register Account"/>
+        </form>
+        <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDASOXphdfPFUK6mdYDTlhqnXmu-WNJQZs",
+                authDomain: "hacktech2018-4d204.firebaseapp.com",
+                databaseURL: "https://hacktech2018-4d204.firebaseio.com",
+                projectId: "hacktech2018-4d204",
+                storageBucket: "hacktech2018-4d204.appspot.com",
+                messagingSenderId: "88807207497"
+            };
+            firebase.initializeApp(config);
+        </script>
+        <script>
+        // Handles register button clicked
+        function register() {
+            if (!firebase.auth().currentUser) {
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+                // Handle Errors here.
+                 var errorCode = error.code;
+                var errorMessage = error.message;
+                 // ...
+                });
+            }
+        }
+            document.getElementById("register-button").addEventListener("click", register, false)
+        </script>
+    </body>
+</html>
