@@ -2,42 +2,66 @@
 <html>
     <head>
         <title>Superhero Language Learner</title>
+        <link rel="stylesheet" href="marvel_theme.css"/>
     </head>
     <body>
         <h1>Register</h1>
         <form>
+            <input type="text" id="display-name" name="display-name" placeholder="Display Name"/> <br />
             <input type="text" id="email" name="email" placeholder="Email"/> <br />
             <input type="password" id="password" name="password" placeholder="Password"/> <br />
             <input type="submit" id="register-button" value="Register Account"/>
         </form>
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+        <script src="js/init.js"></script>
         <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDASOXphdfPFUK6mdYDTlhqnXmu-WNJQZs",
-                authDomain: "hacktech2018-4d204.firebaseapp.com",
-                databaseURL: "https://hacktech2018-4d204.firebaseio.com",
-                projectId: "hacktech2018-4d204",
-                storageBucket: "hacktech2018-4d204.appspot.com",
-                messagingSenderId: "88807207497"
-            };
-            firebase.initializeApp(config);
-        </script>
-        <script>
-        // Handles register button clicked
-        function register() {
-            if (!firebase.auth().currentUser) {
-                var email = document.getElementById("email").value;
-                var password = document.getElementById("password").value;
-                firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-                // Handle Errors here.
-                 var errorCode = error.code;
-                var errorMessage = error.message;
-                 // ...
-                });
+            // Handles register button clicked
+            function register() {
+                console.log("steps in register func");
+                if (!firebase.auth().currentUser) {
+                    var displayName = $("#display-name").val();
+                    var email = $("#email").val();
+                    var password = $("#password").val();
+                    if (displayName.length < 4) {
+                        alert('Please enter a display name.');
+                        return;
+                    }
+                    if (email.length < 4) {
+                        alert('Please enter an email address.');
+                        return;
+                    }
+                    if (password.length < 4) {
+                        alert('Please enter a password.');
+                        return;
+                    }
+                    // CREATE USER IN THE DATA BASE
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                    // IF SUCCESSFUL, SIGN IN
+                    .then(function() {
+                        firebase.auth().signInWithEmailAndPassword(email, password)
+                        // IF SIGN IN SUCCESSFUL, SET DISPLAY NAME AND REDIRECT TO PROGRESS
+                        .then(function() {
+                            var user = firebase.auth().currentUser;
+                            user.displayName = displayName;
+                            window.location.replace("progress.html");
+                        })
+                        // SHOULDN'T BE UNSUCCESSFUL
+                        .catch(function(error) {
+                            // Handle Errors here.
+                            var errorCode = error.code;
+                            var errorMessage = error.message;
+                        })
+                    })
+                    // IF USER ALREADY EXISTS IN DATABASE
+                    .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                    });
+                }
             }
-        }
-            document.getElementById("register-button").addEventListener("click", register, false)
+            
+            document.getElementById("register-button").addEventListener("click", register, false);
         </script>
     </body>
 </html>

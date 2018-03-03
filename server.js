@@ -12,9 +12,10 @@ app.use(express.static("static/"));
 app.get("/img_list", (req, res) => {
     marvel.characters.get((err, data) => {
         let urls = [];
-        data.forEach(({img}) => {
-            urls.push(img.path + "." + img.extension);
+        data.forEach(({thumbnail}) => {
+            urls.push(thumbnail.path + "." + thumbnail.extension);
         });
+        console.log(urls);
         res.status(200).json(urls);
     });
 });

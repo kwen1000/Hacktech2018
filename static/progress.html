@@ -2,13 +2,11 @@
 <html>
     <head>
         <title>Superhero Language Learner</title>
-        <meta http-equiv="refresh" content="600"/>
-        <style>
-        </style>
+        <link rel="stylesheet" href="marvel_theme.css"/>
     </head>
     <body>
         <header></header>
-        <h1>Welcome, <span id="name">[name]</span>!</h1>
+        <h1>Welcome, <span id="name"></span>!</h1>
         <div class="">
             <div>
                 Spanish
@@ -22,7 +20,20 @@
                 German
                 <progress value="40" max="100"></progress>
             </div>
-
+            <button id="log-out-button">Logout</button>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+        <script src="js/init.js"></script>
+        <script>
+            var username = firebase.auth().currentUser.displayName;
+            $("#name").val(username);
+
+            $("#log-out-button").on("click", function() {
+                firebase.auth().signOut().then(function() {
+                    console.log('logged out');
+                });
+            });
+        </script>
     </body>
 </html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>API test</title>
+    </head>
+    <body>
+        <input type="text" id="text-message" />
+        <button id="send-button">Search</button> <br />
+        <div id="search-results">
+            
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $.get("/img_list", function(data) {
+                data.forEach(function(img) {
+                    $("#search-results").append(`<img src="${img}">`);
+                })
+            });
+        </script>
+    </body>
+</html>

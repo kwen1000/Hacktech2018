@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Chatbot</title>
+        <link rel="stylesheet" href="marvel_theme.css"/>
     </head>
     <body>
         <input type="text" id="text-message" />
@@ -12,8 +13,11 @@
         
         <script>
             // User pressed the send button
-            document.getElementById("send-but")
+            document.getElementById("send-button").addEventListener("click", respond, false)
             // Generate the response (using the API)
+            function respond() {
+                
+            }
         </script>
     </body>
 </html>

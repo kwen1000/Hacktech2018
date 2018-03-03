@@ -1,0 +1,34 @@
+body {background-color: #000000; color: #FFFFFF; font-family: arial; margin: 20%}
+h1 {
+    border-right: 4px #FFFFFF solid;
+    border-left: 32px #FFFFFF solid;
+    color: #FFFFFF;
+    display: inline-block;
+    padding: 8px; 
+    position: relative;
+    left: -6px;
+    text-transform: uppercase;
+    transform: skew(-11deg, 0)
+}
+a, button {
+    background-color: #f0141e;
+    color: #FFFFFF;
+    display: inline-block; 
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 16px; 
+    transform: skew(-11deg, 0)
+}
+button {border: none}
+
+form {background-color: #f0141e; padding: 16px}
+
+input {
+    background-color: #EFEFEF;
+    border: none;
+    color: #000000;
+    display: inline-block; 
+    text-decoration: none;
+    padding: 16px; 
+    transform: skew(-11deg, 0)
+}
