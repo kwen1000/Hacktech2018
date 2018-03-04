@@ -1,0 +1,9 @@
+{
+    "name": "marvelsuperlang",
+    "description": "Repository for Hacktech2018 project.",
+    "repository": "https://marvelsuperlang.com",
+    "scripts": {},
+    "success_url": "/",
+    "addons": [],
+    "env": {}
+}
