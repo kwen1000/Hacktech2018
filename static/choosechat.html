@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Marvel Super Languages</title>
+        <link rel="stylesheet" href="css/marvel_theme.css"/>
+    </head>
+    <body>
+        <header>
+            <h1>Choose a hero to chat with!</h1>
+            <button id="log-out-button">Logout</button>
+        </header>
+        <div style="text-align: center;">
+            <a href="chat.html" id="herochat" title="Spanish"><img src="images/iron.png" style="border-radius: 50%;"></img></a>
+        
+            <a id="herochat" title="Coming soon!" class="disabled"><img src="images/capt.png" style="border-radius: 50%;"></img></a>
+        
+            <a id="herochat" title="Coming soon!" class="disabled"><img src="images/thor.png" style="border-radius: 50%;"></img></a>
+        
+            <a id="herochat" title="Coming soon!" class="disabled"><img src="images/spider.png" style="border-radius: 50%;"></img></a>
+        
+            <a id="herochat" title="Coming soon!" class="disabled"><img src="images/wolf.png" style="border-radius: 50%;"></img></a>
+        </div>
+        <div style="text-align: center">
+            <h2>Immersive chat experiences with your favorite heroes!</h2>
+            <p>Utilize our groundbreaking AI technology to experience language-immersive chats with some of your favorite Marvel 
+            Superheroes! Not only do you get a chance to speak with some of the Avengers, but you'll also reinforce your 
+            learning!</p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+        <script src="js/init.js"></script>
+        <script>
+            $("#log-out-button").on("click", function() {
+                firebase.auth().signOut().then(function() {
+                    console.log('logged out');
+                    window.location.replace("index.html");
+                });
+            });
+        </script>
+    </body>
+</html>

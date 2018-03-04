@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Superhero Language Learner</title>
+        <title>Marvel Super Languages</title>
         <link rel="stylesheet" href="css/marvel_theme.css"/>
     </head>
     <body>
-        <header></header>
-        <h1>Welcome, <span id="username"></span>!</h1>
+        <header>
+            <h1>Welcome, <span id="username"></span>!</h1>
+            <button id="log-out-button">Logout</button>
+        </header>
         <div>
             <div>
                 <a href="spanishcourse.html">Spanish</a>
-                <progress value="20" max="100"></progress>
+                <progress value="1" max="100"></progress>
             </div>
             <div>
                 <a>French</a>
-                <progress value="0" max="100"></progress>
+                <progress value="50" max="100"></progress>
             </div>
             <div>
                 <a>German</a>
-                <progress value="0" max="100"></progress>
+                <progress value="100" max="100"></progress>
             </div>
-            <button id="log-out-button">Logout</button>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>

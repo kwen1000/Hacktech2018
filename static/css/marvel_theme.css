@@ -39,8 +39,6 @@ body {
 }
 
 h1 {
-    /* border-right: 4px #FFFFFF solid;
-    border-left: 32px #FFFFFF solid; */
     color: #FFFFFF;
     display: inline-block;
     padding: 8px; 
@@ -50,41 +48,63 @@ h1 {
     transform: skew(-11deg, 0)
 }
 
-h1::before {
+@keyframes vibrant {
+    0% {background-position: 0 0}
+    50% {background-position: 100% 100%}
+    100% {background-position: 0 0}
+}
+
+h1 {
+    animation: 26s vibrant ease-out infinite;
+    border: 1px #FFFFFF solid;
+    background-image: url(/images/marvel_universe_blur.jpg);
+    background-position: 0 0;
+    color: #FFFFFFF; 
+    display: block;
+}
+
+/* h1::before {
     content: ""; 
     animation: 1s swoop;
     background-color: #FFFFFF; 
     width: 12px; 
-    height: 77%; 
+    height: 100%; 
+    margin-top: -8px;
     position: absolute; 
     right: 100%
-}
+} */
 
 a, button {
     background-color: #FFFFFF;
     box-shadow: 4px 4px #660000;
     color: #000000;
-    display: inline-block; 
     text-decoration: none;
     text-transform: uppercase;
     margin: 4px;
     padding: 16px
 }
 
+a, button {display: inline-block;}
+
 a:hover {
+    background-color: #f0141e;
     box-shadow: 1px 1px #660000;
 }
 
 button {border: none; background-color: #000000; color: #FFFFFF}
+button:hover {background-color: #770000}
 
 body > div, form {
     background-color: #f0141e;
-    background-image: url(/images/marvel_logo.jpg);
     background-repeat: no-repeat;
     background-size: 128px;
     background-position: bottom right;
     box-shadow: 6px 6px #770000;
-    padding: 16px
+    padding: 16px;
+    min-height: 144px;
+}
+form {
+    background-image: url(/images/marvel_logo.jpg)
 }
 /* form::before {content: ""; position: absolute; left: 4px; right: 4px; width: 100%; height: 100%} */
 
@@ -116,14 +136,22 @@ progress::-moz-progress-bar {
     animation: 1s fill;
     background: #FFFFFF;
     position: relative;
-    bottom: 4px;
-    right: 4px;
-    transform: scale(1);
+    bottom: 6px;
+    right: 6px;
+    -moz-transform: scale(1);
 }
 progress::-webkit-progress-bar {
     background: transparent;
 }  
 progress::-webkit-progress-value {
+    -webkit-animation: 1s fill;
+    position: relative;
+    bottom: 6px;
+    right: 6px;
+    background: #FFFFFF;
+    -webkit-transform: scale(1);
+}
+progress::progress-value {
     animation: 1s fill;
     position: relative;
     bottom: 4px;
@@ -131,3 +159,63 @@ progress::-webkit-progress-value {
     background: #FFFFFF;
     transform: scale(1);
 }
+
+.sidebar {position: absolute; text-align: right; left: calc(20% - 152px)}
+#comic-pic {float: left; margin-right: 8px}
+#backlink {
+    transform: skew(-11deg, 0);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#backlink::before {content: "< "}
+
+#log-out-button {
+    float: right;
+}
+
+#herochat {
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 0;
+}
+
+@keyframes popup {
+    0% {transform: scale(0)}
+    100% {transform: scale(1)}
+}
+
+#herochat:hover::after {
+    content: attr(title);
+    font-size: 12px;
+    background-color: #FFFFFF;
+    position: absolute;
+    display: block;
+    padding: 8px;
+    box-shadow: 4px 4px #770000;
+    animation: 0.5s popup;
+    margin-top: 0px;
+    transform: scale(1);
+}
+
+.disabled {filter: saturate(0)}
+.disabled:hover {
+    box-shadow: 4px 4px #660000;
+}
+
+@keyframes spawn {
+    0% {transform: translateX(40px) scale(0)}
+    100% {transform: translateX(0) scale(1)}
+}
+
+.sidebar > tbody > tr > td > a {
+    animation: 0.4s spawn;
+    transform: translateX(0) scale(1);
+}
+
+.sidebar > tbody > tr > td > a:focus {
+    background-color: #660000;
+}
+
+input[type="radio"] {box-shadow: 4px 4px #660000; border-radius: 50%}

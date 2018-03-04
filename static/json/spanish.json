@@ -1,0 +1,97 @@
+{
+    "questions": [
+        {
+            "lesson": "basics1",
+            "type": "multiple",
+            "word": "woman",
+            "question": "Iron Man: We need to save the woman!",
+            "hint": "Which word means <strong>woman?</strong>",
+            "answers": {
+                "a": "la niña",
+                "b": "el niño",
+                "c": "la mujer"
+            },
+            "correct_answer": "c"
+        },
+        
+        {
+            "lesson": "basics1",
+            "type": "text",
+            "word": "man",
+            "question": "Yo soy el hombre de hierro!",
+            "hint": "Translate to English! (Hint: \"de hierro\" means of iron!)",
+            "answers": {
+                "a": "I am Iron Man",
+                "b": "I am the Iron Man",
+                "c": "I am the man of iron"
+            }
+        },
+        
+        {
+            "lesson": "basics1",
+            "type": "multiple",
+            "word": "girl",
+            "question": "Iron Man: You'll regret hurting that <strong>girl</strong>!",
+            "hint": "Which word means <strong>girl?</strong>",
+            "answers": {
+                "a": "el niño",
+                "b": "el hombre",
+                "c": "la niña"
+            },
+            "correct_answer": "c"
+        },
+        
+        {
+            "lesson": "phrases",
+            "type": "text",
+            "word": "hello",
+            "question": "Hola, Iron Man! Soy Luis.",
+            "hint": "Translate to English!",
+            "answers": {
+                "a": "Hello, Iron Man! I'm Luis.",
+                "b": "Hello Iron Man! I'm Luis.",
+                "c": "Hi Iron Man! I'm Luis."
+            }
+        },
+        
+        {
+            "lesson": "phrases",
+            "type": "text",
+            "word": "good morning",
+            "question": "Buenos dias, Captain America!",
+            "hint": "Translate to English!",
+            "answers": {
+                "a": "Good morning, Captain America!",
+                "b": "Good morning Captain America!",
+                "c": "Good morning Captain America"
+            }
+        },
+        
+        {
+            "lesson": "phrases",
+            "type": "multiple",
+            "word": "night",
+            "question": "Adiós, buenas noches.",
+            "hint": "Select the missing word!",
+            "answers": {
+                "a": "días",
+                "b": "tardes",
+                "c": "noches"
+            },
+            "correct_answer": "c"
+        },
+        
+        {
+            "lesson": "phrases",
+            "type": "text",
+            "word": "thank you",
+            "question": "¡Gracias Spider-Man!",
+            "hint": "Translate to English!",
+            "answers": {
+                "a": "Thank you, Spider-Man!",
+                "b": "Thank you Spider-Man!",
+                "c": "Thank you, SpiderMan!"
+            }
+        }
+    ]
+}

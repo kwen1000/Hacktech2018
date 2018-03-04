@@ -5,37 +5,60 @@
         <link rel="stylesheet" href="css/marvel_theme.css"/>
     </head>
     <body>
+        <a id="backlink" href="progress.html">Back to Your Courses</a>
         <h1 id="page-title">Learn Spanish</h1>
+        <table class="sidebar">
+            <tr><td><a href="#basics1" class="lesson">Basics 1</a></td></tr>
+            <tr><td><a href="#phrases" class="lesson">Phrases</a></td></tr>
+            <tr><td><a href="#basics2" class="lesson">Basics 2</a></td></tr>
+            <tr><td><a href="#food" class="lesson">Food</a></td></tr>
+            <tr><td><a href="#animals" class="lesson">Animals</a></td></tr>
+            <tr><td><a href="#possession" class="lesson">Possession</a></td></tr>
+            <tr><td><a href="#clothing" class="lesson">Clothing</a></td></tr>
+        </table>
         <div id="content">
-            <table>
-                <tr id="lesson"><td><a href="#basics1">Basics 1</a></td></tr>
-                <tr id="lesson"><td><a href="#phrases">Phrases</a></td></tr>
-                <tr id="lesson"><td><a href="#basics2">Basics 2</a></td></tr>
-                <tr id="lesson"><td><a href="#food">Food</a></td></tr>
-                <tr id="lesson"><td><a href="#animals">Animals</a></td></tr>
-                <tr id="lesson"><td><a href="#possession">Possession</a></td></tr>
-                <tr id="lesson"><td><a href="#clothing">Clothing</a></td></tr>
-            </table>
+            <span>
+                <img id="comic-pic" style="max-width: 300px;" src=""/>
+                <div id="question">
+                    <p id="prompt"></p> <br />
+                    <p id="hint"></p> <br />
+                    <input id="user-input-text" type="text" placeholder="Type 'hello' in spanish here"/>
+                    <form id="choices">
+                        <input type="radio" name="answer" value="choice-a"> la niña<br>
+                        <input type="radio" name="answer" value="choice-b"> el niño<br>
+                        <input type="radio" name="answer" value="choice-c"> la mujer
+                    </form>
+                    <button id="submit-answer">Submit</button>
+                </div>
+            </span>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+        <script src="js/init.js"></script>
         <script>
-            $("a").on("click", function() {
-                console.log(location.hash);
+            $(window).on("load", function() {
+                $(`.lesson[href="${location.hash}"]`).click();
+            });
+
+            var user = firebase.auth().currentUser;
+            
+            // Function to switch content between lessons
+            $(".lesson").on("click", function(e) {
+                // Is hacky? Maybe find a better way to handle
+                e.preventDefault();
+                location.hash = $(this).attr("href").substr(1);
                 const hash = location.hash.substr(1);
-                
-                if(hash === "basics1") {
-                    // Do something
-                    $("#page-title").html("Basics 1");
-                }
-                switch(hash) {
-                    case "basics1":
-                        break;
-                    case "phrases":
-                        break;
-                    case "basics2":
-                        break;
-                    case 
-                }
+                $.getJSON("json/spanish.json")
+                    .done(function(data) {
+                        const questions = data.questions.filter(q => q.lesson === hash);
+                        console.log(questions);
+                        // todo: comic pic
+                        $("#prompt").html(questions[0].question);
+                        $("#hint").html(questions[0].hint);
+                    })
+                    .fail(function(e) {
+                        console.log(e);
+                    });
             });
         </script>
     </body>
