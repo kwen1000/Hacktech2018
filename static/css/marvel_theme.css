@@ -146,6 +146,7 @@ progress::-moz-progress-bar {
     bottom: 6px;
     right: 6px;
     -moz-transform: scale(1);
+    -moz-transition: 1s width;
 }
 progress::-webkit-progress-bar {
     background: transparent;
@@ -157,6 +158,7 @@ progress::-webkit-progress-value {
     right: 6px;
     background: #FFFFFF;
     -webkit-transform: scale(1);
+    -webkit-transition: 1s width;
 }
 progress::progress-value {
     animation: 1s fill;
@@ -165,10 +167,14 @@ progress::progress-value {
     right: 4px;
     background: #FFFFFF;
     transform: scale(1);
+    transition: 1s width;
 }
 
 .sidebar {position: absolute; text-align: right; left: calc(20% - 152px)}
-#comic-pic {float: left; margin-right: 8px}
+#comic-pic {
+    float: left;
+    margin: 0 8px 8px 0;
+}
 #backlink {
     transform: skew(-11deg, 0);
     position: absolute;
@@ -182,15 +188,16 @@ progress::progress-value {
     float: right;
 }
 
-#herochat {
-    background-color: transparent;
-    border-radius: 50%;
-    padding: 0;
-}
-
 @keyframes popup {
     0% {transform: scale(0)}
     100% {transform: scale(1)}
+}
+
+#herochat {
+    animation: 1s popup;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 0;
 }
 
 #herochat:hover::after {
@@ -227,18 +234,38 @@ progress::progress-value {
 
 input[type="radio"] {box-shadow: 4px 4px #660000; border-radius: 50%}
 
-#messages > li {
-    background-color: transparent !important;
-    font-size: 16px;
-    color: #FFFFFF;
-}
-.customer-message {
-    background-color: transparent !important;
-    font-size: 16px;
-    color: #FFFFFF !important;
+#messages { list-style-type: none; margin: 0; padding: 0}
+#messages li { padding: 5px 10px; }
+#messages li.customer-error { color: red; }
+#messages li.customer-message { background-color: transparent; color: #FFFFFF; font-size: 16px; }
+#messages li.customer-message::before { content: "> " }
+#messages li:nth-child(odd) { background: transparent }
+
+#chat_input {
+    border: none;
+    background: transparent;
+    /* position: absolute; */
+    bottom: 0;
+    opacity: 0.1;
 }
 
-input#m {width: 320px}
+#chat_input:hover {
+    opacity: 1;
+}
+
+#chat_input > form {
+    border: none;
+    background: transparent;
+    min-height: 0;
+}
+
+#translate_button {
+    display: inline-block;
+    margin: 16px;
+    float: right;
+}
+
+input#m {width: 60%}
 
 #user-input-text {
     width: 80%;
@@ -257,7 +284,7 @@ h1 #log-out-button {
 
 #chat_container {
     overflow-y: scroll;
-    height: 380px;
+    height: 320px;
 }
 
 @keyframes slide {

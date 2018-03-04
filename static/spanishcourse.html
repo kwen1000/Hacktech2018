@@ -8,16 +8,17 @@
         <a id="backlink" href="progress.html">Back to Your Courses</a>
         <h1 id="page-title">Learn Spanish</h1>
         <table class="sidebar">
-            <tr><td><a href="#basics1" class="lesson">Basics 1</a></td></tr>
-            <tr><td><a href="#phrases" class="lesson">Phrases</a></td></tr>
-            <tr><td><a href="#basics2" class="lesson">Basics 2</a></td></tr>
-            <tr><td><a href="#food" class="lesson">Food</a></td></tr>
-            <tr><td><a href="#animals" class="lesson">Animals</a></td></tr>
-            <tr><td><a href="#possession" class="lesson">Possession</a></td></tr>
-            <tr><td><a href="#clothing" class="lesson">Clothing</a></td></tr>
+            <tr><td><a href="#basics1" pos="1" class="lesson">Basics 1</a></td></tr>
+            <tr><td><a href="#phrases" pos="2" class="lesson">Phrases</a></td></tr>
+            <tr><td><a href="#basics2" pos="3" class="lesson">Basics 2</a></td></tr>
+            <tr><td><a href="#food" pos="4" class="lesson">Food</a></td></tr>
+            <tr><td><a href="#animals" pos="5" class="lesson">Animals</a></td></tr>
+            <tr><td><a href="#possession" pos="6" class="lesson">Possession</a></td></tr>
+            <tr><td><a href="#clothing" pos="7" class="lesson">Clothing</a></td></tr>
         </table>
         <div id="content">
             <span>
+                <progress id = "position" value = "20" max = "100"></progress><br/>
                 <img id="comic-pic" style="max-width: 300px;" src=""/>
                 <div id="question">
                     <p id="prompt">Here, you'll learn Spanish through creating engaging and powerful associations between words 
@@ -45,22 +46,34 @@
             
             // Function to switch content between lessons
             $(".lesson").on("click", function(e) {
-                $("#deadpool").attr("style", "display:none");
                 // Is hacky? Maybe find a better way to handle
                 e.preventDefault();
+                document.getElementById("position").setAttribute("value",
+                    parseInt(e.target.getAttribute("pos")) * 10 || 20);
                 location.hash = $(this).attr("href").substr(1);
                 const hash = location.hash.substr(1);
                 $.getJSON("json/spanish.json")
                     .done(function(data) {
                         const questions = data.questions.filter(q => q.lesson === hash);
                         console.log(questions);
-                        // todo: comic pic
+                        
+                        var stringWordArray = [];
+                        for (const question in data.questions) {
+                            stringWordArray.push(question.word);
+                        }
+                        // SEND GET REQUEST WITH THE WORD TO SERVER
+                        $.getJSON("/img_list", {words: JSON.stringify(stringWordArray)})
+                            .done(function(data){
+                                console.log(data);
+                            });
+                        
+                        // GET BACK THE IMG LIST
+                        // DISPLAY
                         $.getJSON("/img_list")
                             .done(function(data) {
                                 console.log(data);
-                                data[0](function(img)) {
-                                    $("#search-results").append(`<img src="${img}">`);
-                                };
+                                const url = data[0].thumbnail.path + "." + data[0].thumbnail.extension;
+                                $("#comic-pic").attr("src", url);
                             });
                         $("#prompt").html(questions[0].question); // Changes question from JSON
                         $("#hint").html(questions[0].hint); // Changes hint from JSON

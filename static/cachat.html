@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Chat with your Favorite Heroes!</title>
+    <link rel="stylesheet" href="css/marvel_theme.css"/>
+    <style>
+    /*
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      h1 { text-align: center; padding: 20px; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      */
+
+    </style>
+  </head>
+  <body>
+    <a id="backlink" href="choosechat.html">Back</a>
+    <h1>Captain America</h1>
+    <div id="chat_container">
+      <ul id="messages"></ul>
+      <ul id="german-messages" style="display: none;"></ul>
+    </div>
+    <button id="translate_button">Translate to German</button>
+    <span id = "chat_input">
+      <form>
+        <input id="m" autocomplete="off" placeholder="Type your message"/><button>Send</button>
+      </form>
+    </span>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      $(function () {
+        var socket = io('/cachat');
+
+        // When the form is submitted, send a customer message to the server
+        $('form').submit(function(){
+          console.log("INSIDE SUBMIT FUNCTION");
+          var messageText = $('#m').val();
+          $('#messages').append($('<li class="customer-message">').text(messageText));
+          // TRANSLATE MESSAGE TO GERMAN
+          // AND APPEND TO GERMAN MESSAGES LIST
+          $.getJSON("/translate_message", {message: messageText})
+            .done(function(result) {
+              console.log("HELLO THIS IS THE RESULT: " + result);
+              $('#german-messages').append($('<li class="customer-message">').text(result.message));
+              document.getElementById("chat_container").scrollTo(0, 1e9);
+              console.log("AFTER APPENDAGE: " + result);
+            })
+            .fail(function(e) {
+              console.log(e);
+            });
+          socket.emit('customer message', messageText);
+          console.log(messageText + " SENT");
+          $('#m').val('');
+          return false;
+        });
+
+        // When we receive a customer message, display it
+        socket.on('customer message', function(msg){
+          $('#messages').append($('<li>').html("<img src=\"images/captain_america.png\" style=\"max-width:12px\">" + ":  " + msg));
+          $.getJSON("/translate_message", {message: msg})
+            .done(function(result) {
+              console.log(result);
+              $('#german-messages').append($('<li>').html("<img src=\"images/captain_america.png\" style=\"max-width:12px\">" + ":  " + result.message));
+              console.log("AFTER APPENDAGING RECEIVED: " + result);
+            })
+            .fail(function(e) {
+              console.log(e);
+            });
+        });
+
+        // When we receive a system error, display it
+        socket.on('system error', function(error) {
+          var errorText = error.type + ' - ' + error.message;
+          console.log(errorText);
+          $('#messages').append($('<li class="customer-error">').text(errorText));
+        });
+      });
+      
+      function toggleShowingMessages() {
+        console.log("TOGGLING LANGUAGE");
+        // MESSAGES IS HIDDEN, GERMAN MESSAGES IS SHOWING
+        if ($("#messages").css("display") === "none") {
+          $("#messages").css("display", "block");
+          $("#german-messages").css("display", "none");
+        }
+        else { // GERMAN MESSAGES IS HIDDEN, MESSAGES IS SHOWING
+          $("#german-messages").css("display", "block");
+          $("#messages").css("display", "none");
+        }
+      }
+      
+      $("#translate_button").on("click", toggleShowingMessages);
+      
+      setInterval(updateScroll(), 1000);
+      
+      var scrolled = false;
+      function updateScroll(){
+          if(!scrolled){
+              var element = document.getElementById("chat_container");
+              element.scrollTop = element.scrollHeight;
+          }
+      }
+      
+      $("#chat_container").on('scroll', function(){
+          scrolled=true;
+      });
+      
+    </script>
+  </body>
+</html>
+

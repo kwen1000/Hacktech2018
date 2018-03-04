@@ -27,14 +27,21 @@ app.set("port", process.env.PORT);
 app.use(express.static("static/"));
 
 app.get("/img_list", (req, res) => {
+    const words = JSON.parse(req.query.words);
+    console.log(words);
+    let data = [];
+    console.log('/img_list !!!')
     marvel.characters.get((err, data) => {
-        // let urls = [];
-        // data.forEach(({thumbnail}) => {
-        //     urls.push(thumbnail.path + "." + thumbnail.extension);
-        // });
-        // console.log(urls);
-        
         console.log(data);
+        for(const author of data) {
+            for(const word of words) {
+                if(author.description.toLowerCase().includes(word.toLowerCase())) {
+                    data.push(author);
+                    break;
+                }
+            }
+        }
+        console.log(typeof data)
         res.status(200).json(data);
     });
 });

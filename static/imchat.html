@@ -12,12 +12,7 @@
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       */
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li.customer-error { color: red; }
-      #messages li.customer-message { color: blue; }
-      #messages li.customer-message::before { content: "> " }
-      #messages li:nth-child(odd) { background: #eee; }
+
     </style>
   </head>
   <body>
@@ -27,12 +22,12 @@
       <ul id="messages"></ul>
       <ul id="spanish-messages" style="display: none;"></ul>
     </div>
-    <div>
-      <form stylelol="width: 60%; text-align: center; padding-top: 50px;">
+    <button id="translate_button">Translate to Spanish</button>
+    <span id = "chat_input">
+      <form>
         <input id="m" autocomplete="off" placeholder="Type your message"/><button>Send</button>
       </form>
-      <button id="translate_button">Translate to Spanish</button>
-    </div>
+    </span>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
@@ -50,7 +45,27 @@
             .done(function(result) {
               console.log("HELLO THIS IS THE RESULT: " + result);
               $('#spanish-messages').append($('<li class="customer-message">').text(result.message));
+              document.getElementById("chat_container").scrollTo(0, 1e9);
               console.log("AFTER APPENDAGE: " + result);
+            })
+            .fail(function(e) {
+              console.log(e);
+            });
+          $.getJSON("json/spanish.json")
+            .done(function(result) {
+              let words = [];
+              for(const question of result.questions) {
+                words.push(question.word);
+              }
+              console.log('words', words);
+              $.getJSON("/img_list", {words: JSON.stringify(words)})
+                .done(function(result) {
+                  console.log('result');
+                  console.log(result);
+                })
+                .fail(function(e) {
+                  console.log(e);
+                });
             })
             .fail(function(e) {
               console.log(e);
