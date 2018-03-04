@@ -20,7 +20,8 @@
             <span>
                 <img id="comic-pic" style="max-width: 300px;" src=""/>
                 <div id="question">
-                    <p id="prompt"></p> <br />
+                    <p id="prompt">Here, you'll learn Spanish through creating engaging and powerful associations between words 
+                    and your favorite comic book characters! Click the lessons on the left to continue!</p> <br />
                     <p id="hint"></p> <br />
                     <input id="user-input-text" type="text" placeholder="Type 'hello' in spanish here" style="display:none"/>
                     <form id="choices" style="display:none">
@@ -28,7 +29,7 @@
                         <input type="radio" name="answer" value="b"> el niño<br>
                         <input type="radio" name="answer" value="c"> la mujer
                     </form>
-                    <button id="submit-answer">Submit</button>
+                    <button id="submit-answer" style="display:none">Submit</button>
                 </div>
             </span>
         </div>
@@ -44,6 +45,7 @@
             
             // Function to switch content between lessons
             $(".lesson").on("click", function(e) {
+                $("#deadpool").attr("style", "display:none");
                 // Is hacky? Maybe find a better way to handle
                 e.preventDefault();
                 location.hash = $(this).attr("href").substr(1);
@@ -56,9 +58,13 @@
                         $.getJSON("/img_list")
                             .done(function(data) {
                                 console.log(data);
+                                data[0](function(img)) {
+                                    $("#search-results").append(`<img src="${img}">`);
+                                };
                             });
                         $("#prompt").html(questions[0].question); // Changes question from JSON
                         $("#hint").html(questions[0].hint); // Changes hint from JSON
+                        $("#submit-answer").attr("style", "display: block");
                         if(questions[0].type === "multiple") { // If multiple choice,
                             let html = "";
                             for(const choice in questions[0].answers) {
@@ -79,7 +85,7 @@
             });
             
             function checkMultipleChoice(valueClicked, correctAnswer) {
-                if (valueClicked === correctAnswer)
+                // if (valueClicked === correctAnswer)
             }
             
         </script>

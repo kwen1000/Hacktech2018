@@ -243,3 +243,28 @@ input#m {width: 320px}
 #user-input-text {
     width: 80%;
 }
+
+h1 #log-out-button {
+    transform: skew(11deg, 0);
+    position: relative;
+    left: -10px;
+    top: -10px;
+}
+
+#translate_button {
+    width: 200px;
+}
+
+#chat_container {
+    overflow-y: scroll;
+    height: 380px;
+}
+
+@keyframes slide {
+    0% {margin-left: -64px; opacity: 0.1}
+    100% {margin-left: 0; opacity: 1}
+}
+
+div#chat_container > ul > li {
+    animation: 1s slide;
+}

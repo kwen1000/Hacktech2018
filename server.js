@@ -9,15 +9,20 @@ const marvel = new Marvel({
 });
 
 // Load our custom classes
-const CustomerStore = require('./customerStore.js');
-const MessageRouter = require('./messageRouter.js');
+const CustomerStore = require('./static/js/customerStore.js');
+const MessageRouter = require('./static/js/messageRouter.js');
 
 // Load and instantiate the API.AI client library
 const ApiAi = require('apiai');
 const apiAiApp = ApiAi("005cbf79d6bd497d926eed400ab6a23e");
 
+// Instantiate our app
+const customerStore = new CustomerStore();
+const messageRouter = new MessageRouter(customerStore, apiAiApp, io.of('/chat'), io.of('/operator'));
+const translate = require("./translate");
 
-
+messageRouter.handleConnections();
+    
 app.set("port", process.env.PORT);
 app.use(express.static("static/"));
 
@@ -34,10 +39,14 @@ app.get("/img_list", (req, res) => {
     });
 });
 
-app.get("/:lang/:course", (req, res) => {
-    
+app.get("/translate_message", (req, res) => {
+    translate.translateText(req.query.message, "es")
+        .then(data => {
+            res.status(200).json({message: data[0]});
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
-app.listen(app.get("port"), () => {
-    console.log("Server is listening");
-});
+http.listen(app.get("port"), () => console.log("Server is listening"));
