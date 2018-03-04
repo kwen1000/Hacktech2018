@@ -20,7 +20,7 @@
     <h1>Captain America</h1>
     <div id="chat_container">
       <ul id="messages"></ul>
-      <ul id="german-messages" style="display: none;"></ul>
+      <ul id="alt-messages" style="display: none;"></ul>
     </div>
     <button id="translate_button">Translate to German</button>
     <span id = "chat_input">
@@ -44,7 +44,7 @@
           $.getJSON("/translate_message", {message: messageText})
             .done(function(result) {
               console.log("HELLO THIS IS THE RESULT: " + result);
-              $('#german-messages').append($('<li class="customer-message">').text(result.message));
+              $('#alt-messages').append($('<li class="customer-message">').text(result.message));
               document.getElementById("chat_container").scrollTo(0, 1e9);
               console.log("AFTER APPENDAGE: " + result);
             })
@@ -60,10 +60,10 @@
         // When we receive a customer message, display it
         socket.on('customer message', function(msg){
           $('#messages').append($('<li>').html("<img src=\"images/captain_america.png\" style=\"max-width:12px\">" + ":  " + msg));
-          $.getJSON("/translate_message", {message: msg})
+          $.getJSON("/translate_message", {message: msg, lang: "de"})
             .done(function(result) {
               console.log(result);
-              $('#german-messages').append($('<li>').html("<img src=\"images/captain_america.png\" style=\"max-width:12px\">" + ":  " + result.message));
+              $('#alt-messages').append($('<li>').html("<img src=\"images/captain_america.png\" style=\"max-width:12px\">" + ":  " + result.message));
               console.log("AFTER APPENDAGING RECEIVED: " + result);
             })
             .fail(function(e) {
@@ -84,11 +84,11 @@
         // MESSAGES IS HIDDEN, GERMAN MESSAGES IS SHOWING
         if ($("#messages").css("display") === "none") {
           $("#messages").css("display", "block");
-          $("#german-messages").css("display", "none");
+          $("#alt-messages").css("display", "none");
           $("#translate_button").text("Translate to German");
         }
         else { // GERMAN MESSAGES IS HIDDEN, MESSAGES IS SHOWING
-          $("#german-messages").css("display", "block");
+          $("#alt-messages").css("display", "block");
           $("#messages").css("display", "none");
           $("#translate_button").text("Translate to English");
         }

@@ -64,7 +64,7 @@ app.get("/img_list", (req, res) => {
 });
 
 app.get("/translate_message", (req, res) => {
-    translate.translateText(req.query.message, "es")
+    translate.translateText(req.query.message, req.query.lang)
         .then(data => {
             res.status(200).json({message: data[0]});
         })

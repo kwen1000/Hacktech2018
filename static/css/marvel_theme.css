@@ -93,6 +93,8 @@ a, button {display: inline-block;}
 
 a:hover {
     background-color: #f0141e;
+    background-image: url(/images/marvel_universe_blur.jpg);
+    color: #FFFFFF;
     box-shadow: 1px 1px #660000;
 }
 
@@ -128,16 +130,25 @@ input {
 }
 
 @keyframes fill {
-    0% {transform: scale(0)}
-    100% {transform: scale(1)}
+    0% {transform: translateX(-10%) skew(-11deg, 0)}
+    100% {transform: translateX(0) skew(-11deg, 0)}
 }
 
 progress {
+    animation: 1s fill;
     width: 100%;
     border: 0;
     margin-top: 16px;
-    background: #000000;
+    background: #444444;
+    background-image: url(/images/marvel_universe_blur.jpg);
+    background-size: cover;
     transform: skew(-11deg, 0);
+    margin: 16px 8px;
+}
+
+progress::after {
+    content: attr(value) "% finished";
+    display: block;
 }
 
 progress::-moz-progress-bar {
@@ -174,7 +185,8 @@ progress::progress-value {
 .sidebar {position: absolute; text-align: right; left: calc(20% - 152px)}
 #comic-pic {
     float: left;
-    margin: 0 8px 8px 0;
+    margin: 16px 16px 16px 0;
+    box-shadow: 6px 6px #660000;
 }
 #backlink {
     transform: skew(-11deg, 0);
@@ -205,6 +217,7 @@ progress::progress-value {
     content: attr(title);
     font-size: 12px;
     background-color: #FFFFFF;
+    color: #000000;
     position: absolute;
     display: block;
     padding: 8px;

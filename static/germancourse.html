@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Learn Spanish</title>
+        <title>Learn German</title>
         <link rel="stylesheet" href="css/marvel_theme.css"/>
     </head>
     <body>
         <a id="backlink" href="progress.html">Back to Your Courses</a>
-        <h1 id="page-title">Learn Spanish</h1>
+        <h1 id="page-title">Learn German</h1>
         <table class="sidebar">
             <tr><td><a href="#basics1" pos="1" class="lesson">Basics 1</a></td></tr>
             <tr><td><a href="#phrases" pos="2" class="lesson">Phrases</a></td></tr>
@@ -21,8 +21,8 @@
                 <progress id="position" value="20" max="100"></progress><br/>
                 <img id="comic-pic" style="max-width: 300px;" src=""/>
                 <div id="question">
-                    <p id="prompt">Here, you'll learn Spanish through creating engaging and powerful associations between words 
-                    and your favorite comic book characters! Click the lessons on the left to continue!</p> <br />
+                    <p id="prompt">Ready to learn German? You've come to the right place! We'll help you create lasting 
+                    adventures with some of your favorite comic book characters! Click the lessons on the left to continue!</p> <br />
                     <p id="hint"></p> <br />
                     <input id="user-input-text" type="text" placeholder="Type here" style="display:none"/>
                     <form id="choices" style="display:none">
@@ -76,8 +76,7 @@
                                 characters = data;
                                 console.log('data', data)
                                 console.log('characters', characters)
-                                var rand = Math.floor(Math.random() * 20) % data.length;
-                                var url = data[rand].thumbnail.path + "." + data[rand].thumbnail.extension;
+                                var url = data[0].thumbnail.path + "." + data[0].thumbnail.extension;
                                 $("#comic-pic").attr("src", url); // Changes image source
                                 $("#prompt").html(questions[0].question); // Changes question from JSON
                                 $("#hint").html(questions[0].hint); // Changes hint from JSON
@@ -121,8 +120,7 @@
                             $("#user-input-text").css("display", "none");
                         }
                         else {
-                            var rand = Math.floor(Math.random() * 20) % characters.length;
-                            var url = characters[rand].thumbnail.path + "." + characters[rand].thumbnail.extension;
+                            var url = characters[indexCurrentlyAt].thumbnail.path + "." + characters[indexCurrentlyAt].thumbnail.extension;
                             console.log(characters.length);
                             $("#comic-pic").attr("src", url); // Changes image source
                             $("#prompt").html(questions[indexCurrentlyAt].question); // Changes question from JSON

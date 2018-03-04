@@ -71,7 +71,7 @@
             "lesson": "phrases",
             "type": "multiple",
             "word": "night",
-            "question": "Adiós, buenas noches.",
+            "question": "Adiós, buenas ________.",
             "hint": "Select the missing word!",
             "answers": {
                 "a": "días",
@@ -108,15 +108,42 @@
         },
         
         {
-            "lesson": "basics2",
+            "lesson": "food",
+            "type": "multiple",
+            "word": "cheese",
+            "question": "What is the word for cheese?",
+            "hint": "",
+            "answers": {
+                "a": "El huevo",
+                "b": "El queso",
+                "c": "El pollo"
+            },
+            "correct_answer": "b"
+        },
+        
+        {
+            "lesson": "food",
+            "type": "text",
+            "word": "eat",
+            "question": "I don't eat cheese.",
+            "hint": "Translate to Spanish!",
+            "answers": {
+                "a": "Yo no como queso",
+                "b": "No como queso",
+                "c": "Yo no como queso."
+            }
+        },
+        
+        {
+            "lesson": "food",
             "type": "text",
             "word": "we",
-            "question": "Él, ella, nosotros",
-            "hint": "Translate to English! (Hint: multiple people would say \"nosotros\"!)",
+            "question": "No, yo no cocino.",
+            "hint": "Translate to English! (Hint: \"cocino\" means to cook!)",
             "answers": {
-                "a": "He, she, we",
-                "b": "he, she, we",
-                "c": "he, she, us"
+                "a": "No, I don't cook.",
+                "b": "No I don't cook",
+                "c": "No I don't cook."
             }
         }
     ]
