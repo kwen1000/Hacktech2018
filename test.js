@@ -4,11 +4,14 @@ const marvel = new Marvel({
     privateKey: "14a75a4e4221351a6cb34fee73e444063ff739af"
 });
 
-
+const keyword = "revenge";
 marvel.characters.get((err, data) => {
-    let urls = [];
-    data.forEach(({thumbnail}) => {
-        urls.push(thumbnail.path + "." + thumbnail.extension);
+    let results = [];
+    data.forEach(character => {
+        if(character.description.toLowerCase().includes(keyword)) {
+            results.push(character);
+        }
     });
-    console.log(urls);
+    console.log(results);
+    // console.log(data);
 });

@@ -92,6 +92,32 @@
                 "b": "Thank you Spider-Man!",
                 "c": "Thank you, SpiderMan!"
             }
+        },
+        
+        {
+            "lesson": "basics2",
+            "type": "text",
+            "word": "we",
+            "question": "Él, ella, nosotros",
+            "hint": "Translate to English! (Hint: multiple people would say \"nosotros\"!)",
+            "answers": {
+                "a": "He, she, we",
+                "b": "he, she, we",
+                "c": "he, she, us"
+            }
+        },
+        
+        {
+            "lesson": "basics2",
+            "type": "text",
+            "word": "we",
+            "question": "Él, ella, nosotros",
+            "hint": "Translate to English! (Hint: multiple people would say \"nosotros\"!)",
+            "answers": {
+                "a": "He, she, we",
+                "b": "he, she, we",
+                "c": "he, she, us"
+            }
         }
     ]
 }

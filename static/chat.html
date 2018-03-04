@@ -26,8 +26,16 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
+      // Begin responding to websocket and http requests
+      // Instantiate our app
+      var customerStore = new CustomerStore();
+      var messageRouter = new MessageRouter(customerStore, apiAiApp, io.of('/chat.html'));
+      $("window").on("load", function() {
+        messageRouter.handleConnections();
+      });
+    
       $(function () {
-        var socket = io('/customer');
+        var socket = io('/chat.html');
 
         // When the form is submitted, send a customer message to the server
         $('form').submit(function(){

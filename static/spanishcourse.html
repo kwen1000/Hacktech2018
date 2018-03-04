@@ -22,11 +22,11 @@
                 <div id="question">
                     <p id="prompt"></p> <br />
                     <p id="hint"></p> <br />
-                    <input id="user-input-text" type="text" placeholder="Type 'hello' in spanish here"/>
-                    <form id="choices">
-                        <input type="radio" name="answer" value="choice-a"> la niña<br>
-                        <input type="radio" name="answer" value="choice-b"> el niño<br>
-                        <input type="radio" name="answer" value="choice-c"> la mujer
+                    <input id="user-input-text" type="text" placeholder="Type 'hello' in spanish here" style="display:none"/>
+                    <form id="choices" style="display:none">
+                        <input type="radio" name="answer" value="a"> la niña<br>
+                        <input type="radio" name="answer" value="b"> el niño<br>
+                        <input type="radio" name="answer" value="c"> la mujer
                     </form>
                     <button id="submit-answer">Submit</button>
                 </div>
@@ -53,13 +53,35 @@
                         const questions = data.questions.filter(q => q.lesson === hash);
                         console.log(questions);
                         // todo: comic pic
-                        $("#prompt").html(questions[0].question);
-                        $("#hint").html(questions[0].hint);
+                        $.getJSON("/img_list")
+                            .done(function(data) {
+                                console.log(data);
+                            });
+                        $("#prompt").html(questions[0].question); // Changes question from JSON
+                        $("#hint").html(questions[0].hint); // Changes hint from JSON
+                        if(questions[0].type === "multiple") { // If multiple choice,
+                            let html = "";
+                            for(const choice in questions[0].answers) {
+                                html += `<input type="radio" name="answer" value="${choice}"> ${questions[0].answers[choice]}<br>`;
+                            }
+                            $("#choices").html(html);
+                            $("#user-input-text").css("display", "none");
+                            $("#choices").css("display", "block");
+                        }
+                        else {
+                            $("#user-input-text").css("display", "block");
+                            $("#choices").css("display", "none");
+                        }
                     })
                     .fail(function(e) {
                         console.log(e);
                     });
             });
+            
+            function checkMultipleChoice(valueClicked, correctAnswer) {
+                if (valueClicked === correctAnswer)
+            }
+            
         </script>
     </body>
 </html>

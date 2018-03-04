@@ -1,3 +1,7 @@
+@font-face {
+    font-family: Roboto;
+    src: url(/fonts/Roboto-Light.ttf)
+}
 
 @keyframes opening {
     0% {border-left: 0px #FFFFFF solid}
@@ -28,7 +32,7 @@ body {
     background-image: url(/images/marvel_universe.jpg);
     background-size: cover;
     color: #FFFFFF;
-    font-family: arial, sans-serif;
+    font-family: Roboto, sans-serif;
     margin: 10% 20% 0 20%
 }
 
@@ -55,7 +59,7 @@ h1 {
 }
 
 h1 {
-    animation: 26s vibrant ease-out infinite;
+    animation: 26s vibrant ease infinite;
     border: 1px #FFFFFF solid;
     background-image: url(/images/marvel_universe_blur.jpg);
     background-position: 0 0;
@@ -95,17 +99,20 @@ button {border: none; background-color: #000000; color: #FFFFFF}
 button:hover {background-color: #770000}
 
 body > div, form {
-    background-color: #f0141e;
+    border: 1px #FFFFFF solid;
+    background-image: url(/images/marvel_universe_blur.jpg);
+    /* background-color: #f0141e; */
     background-repeat: no-repeat;
-    background-size: 128px;
+    /* background-size: 128px; */
     background-position: bottom right;
-    box-shadow: 6px 6px #770000;
+    /* box-shadow: 6px 6px #770000; */
     padding: 16px;
     min-height: 144px;
 }
+/* 
 form {
     background-image: url(/images/marvel_logo.jpg)
-}
+} */
 /* form::before {content: ""; position: absolute; left: 4px; right: 4px; width: 100%; height: 100%} */
 
 input {
@@ -219,3 +226,20 @@ progress::progress-value {
 }
 
 input[type="radio"] {box-shadow: 4px 4px #660000; border-radius: 50%}
+
+#messages > li {
+    background-color: transparent !important;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+.customer-message {
+    background-color: transparent !important;
+    font-size: 16px;
+    color: #FFFFFF !important;
+}
+
+input#m {width: 320px}
+
+#user-input-text {
+    width: 80%;
+}
