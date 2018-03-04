@@ -2,16 +2,17 @@
 <html>
     <head>
         <title>Superhero Language Learner</title>
-        <link rel="stylesheet" href="marvel_theme.css"/>
+        <link rel="stylesheet" href="css/marvel_theme.css"/>
     </head>
     <body>
         <h1>Register</h1>
-        <form>
+        <div>
             <input type="text" id="display-name" name="display-name" placeholder="Display Name"/> <br />
             <input type="text" id="email" name="email" placeholder="Email"/> <br />
             <input type="password" id="password" name="password" placeholder="Password"/> <br />
             <input type="submit" id="register-button" value="Register Account"/>
-        </form>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
         <script src="js/init.js"></script>
         <script>
@@ -22,15 +23,15 @@
                     var displayName = $("#display-name").val();
                     var email = $("#email").val();
                     var password = $("#password").val();
-                    if (displayName.length < 4) {
+                    if (!displayName) {
                         alert('Please enter a display name.');
                         return;
                     }
-                    if (email.length < 4) {
+                    if (!email) {
                         alert('Please enter an email address.');
                         return;
                     }
-                    if (password.length < 4) {
+                    if (!password) {
                         alert('Please enter a password.');
                         return;
                     }
@@ -38,15 +39,31 @@
                     firebase.auth().createUserWithEmailAndPassword(email, password)
                     // IF SUCCESSFUL, SIGN IN
                     .then(function() {
+                        console.log("success in creation");
                         firebase.auth().signInWithEmailAndPassword(email, password)
                         // IF SIGN IN SUCCESSFUL, SET DISPLAY NAME AND REDIRECT TO PROGRESS
                         .then(function() {
-                            var user = firebase.auth().currentUser;
-                            user.displayName = displayName;
+                            console.log("success in sign in");
+                            firebase.auth().currentUser.updateProfile({
+                                displayName: displayName
+                            }).then(() => {
+                                this.notifyPath('user.displayName')
+                                console.log('Display name changed with success');
+                                // the display name below is correct and updated
+                                console.log(this.user);
+                                // Notifying path on the displayName property force the binding
+                                // to refresh in the current element template but not in other
+                                // elements such as the header custom element that also displays
+                                // the user display name.
+                                // this.notifyPath('user.displayName');
+                            }).catch(error => {
+                                console.log('Error while changing display name: ' + error.message);
+                            });
                             window.location.replace("progress.html");
                         })
                         // SHOULDN'T BE UNSUCCESSFUL
                         .catch(function(error) {
+                            console.log("failed signin");
                             // Handle Errors here.
                             var errorCode = error.code;
                             var errorMessage = error.message;
@@ -54,6 +71,7 @@
                     })
                     // IF USER ALREADY EXISTS IN DATABASE
                     .catch(function(error) {
+                        console.log("failed creation", error);
                         // Handle Errors here.
                         var errorCode = error.code;
                         var errorMessage = error.message;
@@ -61,7 +79,7 @@
                 }
             }
             
-            document.getElementById("register-button").addEventListener("click", register, false);
+            $("#register-button").on("click", register);
         </script>
     </body>
 </html>

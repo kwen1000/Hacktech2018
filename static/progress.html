@@ -2,23 +2,23 @@
 <html>
     <head>
         <title>Superhero Language Learner</title>
-        <link rel="stylesheet" href="marvel_theme.css"/>
+        <link rel="stylesheet" href="css/marvel_theme.css"/>
     </head>
     <body>
         <header></header>
-        <h1>Welcome, <span id="name"></span>!</h1>
-        <div class="">
+        <h1>Welcome, <span id="username"></span>!</h1>
+        <div>
             <div>
-                Spanish
+                <a href="spanishcourse.html">Spanish</a>
                 <progress value="20" max="100"></progress>
             </div>
             <div>
-                French
-                <progress value="30" max="100"></progress>
+                <a>French</a>
+                <progress value="0" max="100"></progress>
             </div>
             <div>
-                German
-                <progress value="40" max="100"></progress>
+                <a>German</a>
+                <progress value="0" max="100"></progress>
             </div>
             <button id="log-out-button">Logout</button>
         </div>
@@ -26,12 +26,14 @@
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
         <script src="js/init.js"></script>
         <script>
-            var username = firebase.auth().currentUser.displayName;
-            $("#name").val(username);
+            firebase.auth().onAuthStateChanged(function(user) {
+                $("#username").html(user.displayName);
+            });
 
             $("#log-out-button").on("click", function() {
                 firebase.auth().signOut().then(function() {
                     console.log('logged out');
+                    window.location.replace("index.html");
                 });
             });
         </script>

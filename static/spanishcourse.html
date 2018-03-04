@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Learn Spanish</title>
+        <link rel="stylesheet" href="css/marvel_theme.css"/>
+    </head>
+    <body>
+        <h1 id="page-title">Learn Spanish</h1>
+        <div id="content">
+            <table>
+                <tr id="lesson"><td><a href="#basics1">Basics 1</a></td></tr>
+                <tr id="lesson"><td><a href="#phrases">Phrases</a></td></tr>
+                <tr id="lesson"><td><a href="#basics2">Basics 2</a></td></tr>
+                <tr id="lesson"><td><a href="#food">Food</a></td></tr>
+                <tr id="lesson"><td><a href="#animals">Animals</a></td></tr>
+                <tr id="lesson"><td><a href="#possession">Possession</a></td></tr>
+                <tr id="lesson"><td><a href="#clothing">Clothing</a></td></tr>
+            </table>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $("a").on("click", function() {
+                console.log(location.hash);
+                const hash = location.hash.substr(1);
+                
+                if(hash === "basics1") {
+                    // Do something
+                    $("#page-title").html("Basics 1");
+                }
+                switch(hash) {
+                    case "basics1":
+                        break;
+                    case "phrases":
+                        break;
+                    case "basics2":
+                        break;
+                    case 
+                }
+            });
+        </script>
+    </body>
+</html>

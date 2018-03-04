@@ -20,6 +20,10 @@ app.get("/img_list", (req, res) => {
     });
 });
 
+app.get("/:lang/:course", (req, res) => {
+    
+});
+
 app.listen(app.get("port"), () => {
     console.log("Server is listening");
 });
