@@ -85,10 +85,12 @@
         if ($("#messages").css("display") === "none") {
           $("#messages").css("display", "block");
           $("#german-messages").css("display", "none");
+          $("#translate_button").text("Translate to German");
         }
         else { // GERMAN MESSAGES IS HIDDEN, MESSAGES IS SHOWING
           $("#german-messages").css("display", "block");
           $("#messages").css("display", "none");
+          $("#translate_button").text("Translate to English");
         }
       }
       

@@ -15,8 +15,9 @@
 }
 
 @keyframes swoop {
-    10% {width: 12px; right: 100%}
-    66% {width: 100%; right: 12px}
+    0% {width: 100%; right: 0; color: #000000}
+    33% {width: 100%; right: 0; color: #000000}
+    66% {width: 100%; right: 0; color: transparent}
     100% {width: 12px; right: 100%}
 }
 
@@ -42,16 +43,6 @@ body {
     }
 }
 
-h1 {
-    color: #FFFFFF;
-    display: inline-block;
-    padding: 8px; 
-    position: relative;
-    text-transform: uppercase;
-    animation: 1s swoop2;
-    transform: skew(-11deg, 0)
-}
-
 @keyframes vibrant {
     0% {background-position: 0 0}
     50% {background-position: 100% 100%}
@@ -65,18 +56,28 @@ h1 {
     background-position: 0 0;
     color: #FFFFFFF; 
     display: block;
+    padding: 8px; 
+    position: relative;
+    text-transform: uppercase;
+    transform: skew(-11deg, 0)
+    
 }
 
-/* h1::before {
-    content: ""; 
-    animation: 1s swoop;
+h1::before {
+    content: "Super Languages"; 
+    animation: 2s swoop;
     background-color: #FFFFFF; 
+    background-image: url(/images/marvel_logo.jpg);
+    background-size: 128px;
+    background-position: 256px 100%;
+    background-repeat: no-repeat;
+    color: transparent;
     width: 12px; 
     height: 100%; 
     margin-top: -8px;
     position: absolute; 
     right: 100%
-} */
+}
 
 a, button {
     background-color: #FFFFFF;

@@ -32,7 +32,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
       $(function () {
-        var socket = io('/chat');
+        var socket = io('/imchat');
 
         // When the form is submitted, send a customer message to the server
         $('form').submit(function(){
@@ -104,10 +104,12 @@
         if ($("#messages").css("display") === "none") {
           $("#messages").css("display", "block");
           $("#spanish-messages").css("display", "none");
+          $("#translate_button").text("Translate to Spanish");
         }
         else { // SPANISH MESSAGES IS HIDDEN, MESSAGES IS SHOWING
           $("#spanish-messages").css("display", "block");
           $("#messages").css("display", "none");
+          $("#translate_button").text("Translate to English");
         }
       }
       

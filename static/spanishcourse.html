@@ -18,13 +18,13 @@
         </table>
         <div id="content">
             <span>
-                <progress id = "position" value = "20" max = "100"></progress><br/>
+                <progress id="position" value="20" max="100"></progress><br/>
                 <img id="comic-pic" style="max-width: 300px;" src=""/>
                 <div id="question">
                     <p id="prompt">Here, you'll learn Spanish through creating engaging and powerful associations between words 
                     and your favorite comic book characters! Click the lessons on the left to continue!</p> <br />
                     <p id="hint"></p> <br />
-                    <input id="user-input-text" type="text" placeholder="Type 'hello' in spanish here" style="display:none"/>
+                    <input id="user-input-text" type="text" placeholder="Type here" style="display:none"/>
                     <form id="choices" style="display:none">
                         <input type="radio" name="answer" value="a"> la niña<br>
                         <input type="radio" name="answer" value="b"> el niño<br>
@@ -44,62 +44,110 @@
 
             var user = firebase.auth().currentUser;
             
+            var characters = [];
+            var questions = [];
+            var indexCurrentlyAt = 0;
+            
             // Function to switch content between lessons
             $(".lesson").on("click", function(e) {
                 // Is hacky? Maybe find a better way to handle
                 e.preventDefault();
-                document.getElementById("position").setAttribute("value",
-                    parseInt(e.target.getAttribute("pos")) * 10 || 20);
-                location.hash = $(this).attr("href").substr(1);
+                //var currentIndex = $(this).attr("pos") - 1;
+                document.getElementById("position").setAttribute("value", parseInt(e.target.getAttribute("pos")) * 10 || 20);
+                location.hash = $(this).attr("href").substr(1); // Sets hash to be the href link
                 const hash = location.hash.substr(1);
-                $.getJSON("json/spanish.json")
+                $.getJSON("json/spanish.json") // Gets question data from json file
                     .done(function(data) {
-                        const questions = data.questions.filter(q => q.lesson === hash);
+                        questions = data.questions.filter(q => q.lesson === hash);
                         console.log(questions);
                         
-                        var stringWordArray = [];
-                        for (const question in data.questions) {
+                        var stringWordArray = []; // Array of question words from json
+                        for (const question of questions) {
                             stringWordArray.push(question.word);
                         }
+                        console.log(stringWordArray);
                         // SEND GET REQUEST WITH THE WORD TO SERVER
                         $.getJSON("/img_list", {words: JSON.stringify(stringWordArray)})
+                            // GET BACK THE IMG LIST
                             .done(function(data){
                                 console.log(data);
+                                //var characterArray = JSON.parse(data); // An array of comic book characters
+                                //console.log(characterArray.length);
+                                characters = data;
+                                console.log('data', data)
+                                console.log('characters', characters)
+                                var url = data[0].thumbnail.path + "." + data[0].thumbnail.extension;
+                                $("#comic-pic").attr("src", url); // Changes image source
+                                $("#prompt").html(questions[0].question); // Changes question from JSON
+                                $("#hint").html(questions[0].hint); // Changes hint from JSON
+                                $("#submit-answer").attr("style", "display: block"); // Shows submit button
+                                if(questions[0].type === "multiple") { // If multiple choice,
+                                    let html = "";
+                                    for(const choice in questions[0].answers) {
+                                        html += `<input type="radio" name="answer" value="${choice}"> ${questions[0].answers[choice]}<br>`;
+                                    }
+                                    $("#choices").html(html);
+                                    $("#user-input-text").css("display", "none");
+                                    $("#choices").css("display", "block");
+                                }
+                                else {
+                                    $("#user-input-text").css("display", "block");
+                                    $("#choices").css("display", "none");
+                                }
                             });
-                        
-                        // GET BACK THE IMG LIST
-                        // DISPLAY
-                        $.getJSON("/img_list")
-                            .done(function(data) {
-                                console.log(data);
-                                const url = data[0].thumbnail.path + "." + data[0].thumbnail.extension;
-                                $("#comic-pic").attr("src", url);
-                            });
-                        $("#prompt").html(questions[0].question); // Changes question from JSON
-                        $("#hint").html(questions[0].hint); // Changes hint from JSON
-                        $("#submit-answer").attr("style", "display: block");
-                        if(questions[0].type === "multiple") { // If multiple choice,
-                            let html = "";
-                            for(const choice in questions[0].answers) {
-                                html += `<input type="radio" name="answer" value="${choice}"> ${questions[0].answers[choice]}<br>`;
-                            }
-                            $("#choices").html(html);
-                            $("#user-input-text").css("display", "none");
-                            $("#choices").css("display", "block");
-                        }
-                        else {
-                            $("#user-input-text").css("display", "block");
-                            $("#choices").css("display", "none");
-                        }
                     })
                     .fail(function(e) {
                         console.log(e);
                     });
             });
-            
-            function checkMultipleChoice(valueClicked, correctAnswer) {
-                // if (valueClicked === correctAnswer)
-            }
+
+            $("#submit-answer").on("click", function() {
+                // Check if answer is correct
+                // If the question to check is multiple choice
+                if (questions[indexCurrentlyAt].type === "multiple") {
+                    // If the choice selected is equal to the correct answer
+                    if ($("#choices input:checked").val() === questions[indexCurrentlyAt].correct_answer) {
+                        // Then answer was right, move to next question:
+                        indexCurrentlyAt++;
+                        // If index goes over or equal to length, show default message
+                        if(indexCurrentlyAt >= questions.length) {
+                            $("#comic-pic").attr("src", ""); // Changes image source to nothing
+                            $("#prompt").html("Congratulations! You finished this lesson! Continue to learn more by starting another lesson on the left, or starting another language!"); // Changes question from JSON
+                            $("#hint").html(""); // Changes hint from JSON
+                            $("#submit-answer").attr("style", "display: none");
+                            $("#choices").css("display", "none");
+                            $("#user-input-text").css("display", "none");
+                        }
+                        else {
+                            var url = characters[indexCurrentlyAt].thumbnail.path + "." + characters[indexCurrentlyAt].thumbnail.extension;
+                            console.log(characters.length);
+                            $("#comic-pic").attr("src", url); // Changes image source
+                            $("#prompt").html(questions[indexCurrentlyAt].question); // Changes question from JSON
+                            $("#hint").html(questions[indexCurrentlyAt].hint); // Changes hint from JSON
+                            $("#submit-answer").attr("style", "display: block"); // Shows submit button
+                            if(questions[indexCurrentlyAt].type === "multiple") { // If multiple choice,
+                                let html = "";
+                                for(const choice in questions[indexCurrentlyAt].answers) {
+                                    html += `<input type="radio" name="answer" value="${choice}"> ${questions[indexCurrentlyAt].answers[choice]}<br>`;
+                                }
+                                $("#choices").html(html);
+                                $("#user-input-text").css("display", "none");
+                                $("#choices").css("display", "block");
+                            }
+                            else {
+                                $("#user-input-text").css("display", "block");
+                                $("#choices").css("display", "none");
+                            }
+                        }
+                    }
+                }
+                else {
+                    
+                }
+                //If not, show alert and make them retake
+                // If it is correct, increase the indexCurrentlyAt, and use the new indexCurrentlyAt to display new question
+            });
+
             
         </script>
     </body>

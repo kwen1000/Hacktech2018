@@ -14,8 +14,7 @@
 // Load third party dependencies
 const app = require('express')();
 const http = require('http').Server(app);
-const io1 = require('socket.io')(http);
-const io2 = require('socket.io')(http);
+const io = require('socket.io')(http);
 
 // Load our custom classes
 const CustomerStore = require('./customerStore.js');
@@ -23,34 +22,38 @@ const MessageRouter = require('./messageRouter.js');
 
 // Load and instantiate the API.AI client library
 const ApiAi = require('apiai');
-const apiAiApp1 = ApiAi("005cbf79d6bd497d926eed400ab6a23e");
-const apiAiApp2 = ApiAi("3fcf64e31b24457c8cd73c48fa7c7d7a");
+// const apiAiApp1 = ApiAi("005cbf79d6bd497d926eed400ab6a23e");
+// const apiAiApp2 = ApiAi("3fcf64e31b24457c8cd73c48fa7c7d7a");
 
-// Instantiate our app
-const customerStore = new CustomerStore();
-const messageRouter1 = new MessageRouter(customerStore, apiAiApp1, io1.of('/imchat'), io1.of('/operator'));
-const messageRouter2 = new MessageRouter(customerStore, apiAiApp2, io2.of('/cachat'), io2.of('/operator'));
+// // Instantiate our app
+// const customerStore = new CustomerStore();
+// const messageRouter1 = new MessageRouter(customerStore, apiAiApp1, io.of('/im-chat'), io.of('/imoperator'));
+// const messageRouter2 = new MessageRouter(customerStore, apiAiApp2, io.of('/ca-chat'), io.of('/caoperator'));
 
-// Serve static html files for the customer and operator clients
-app.get('/imchat', (req, res) => {
-  res.sendFile(`${__dirname}/static/imchat.html`);
-});
+// // Serve static html files for the customer and operator clients
+// app.get('/im-chat', (req, res) => {
+//   res.sendFile(`${__dirname}/static/imchat.html`);
+// });
 
-app.get('/cachat', (req, res) => {
-  res.sendFile(`${__dirname}/static/cachat.html`);
-});
+// app.get('/ca-chat', (req, res) => {
+//   res.sendFile(`${__dirname}/static/cachat.html`);
+// });
 
-app.get('/operator', (req, res) => {
-  res.sendFile(`${__dirname}/static/operator.html`);
-});
+// app.get('/imoperator', (req, res) => {
+//   res.sendFile(`${__dirname}/static/imoperator.html`);
+// });
+
+// app.get('/caoperator', (req, res) => {
+//   res.sendFile(`${__dirname}/static/caoperator.html`);
+// });
 
 // app.get('/operator2', (req, res) => {
 //   res.sendFile(`${__dirname}/static/operator.html`);
 // });
 
 // Begin responding to websocket and http requests
-messageRouter1.handleConnections();
-messageRouter2.handleConnections();
+// messageRouter1.handleConnections();
+// messageRouter2.handleConnections();
 console.log("Both message routers handling connections");
 http.listen(process.env.PORT, () => {
   console.log('Listening on *:8080');
